@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://duvd10nl13wes"]
+
+[ext_resource type="Script" uid="uid://cauygbi485eos" path="res://projectile.gd" id="1_t7eop"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xh6v2"]
+size = Vector2(10, 10)
+
+[node name="Projectile" type="Area2D"]
+script = ExtResource("1_t7eop")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xh6v2")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+color = Color(0.203922, 0.596078, 0.858824, 1)
