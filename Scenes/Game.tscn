@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dqqv4kmlee8mu"]
 
 [ext_resource type="PackedScene" uid="uid://cw472yk2eb2nb" path="res://Scenes/Player.tscn" id="1_wbfu4"]
-[ext_resource type="PackedScene" uid="uid://b7e2ydfn42bp0" path="res://Scenes/Enemy.tscn" id="2_xkndl"]
+[ext_resource type="PackedScene" uid="uid://br311ouioaig6" path="res://Scenes/EnemySpawner.tscn" id="3_j5yw3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wbfu4"]
 size = Vector2(20, 648)
@@ -20,35 +20,33 @@ position = Vector2(563, 275)
 [node name="Walls" type="Node2D" parent="."]
 
 [node name="LeftWall" type="StaticBody2D" parent="Walls"]
-position = Vector2(10, 300)
+position = Vector2(10, 324)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall"]
-position = Vector2(0, 25)
 shape = SubResource("RectangleShape2D_wbfu4")
 
 [node name="ColorRect" type="ColorRect" parent="Walls/LeftWall"]
 offset_left = -10.0
-offset_top = -300.0
+offset_top = -324.0
 offset_right = 10.0
-offset_bottom = 348.0
+offset_bottom = 324.0
 color = Color(0.38841, 0.000906206, 0.546811, 1)
 
 [node name="RightWall" type="StaticBody2D" parent="Walls"]
-position = Vector2(1142, 300)
+position = Vector2(1142, 324)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
-position = Vector2(0, 25)
 shape = SubResource("RectangleShape2D_wbfu4")
 
 [node name="ColorRect" type="ColorRect" parent="Walls/RightWall"]
 offset_left = -10.0
-offset_top = -300.0
+offset_top = -324.0
 offset_right = 10.0
-offset_bottom = 348.0
+offset_bottom = 324.0
 color = Color(0.38841, 0.000906206, 0.546811, 1)
 
 [node name="TopWall" type="StaticBody2D" parent="Walls"]
-position = Vector2(575, 10)
+position = Vector2(576, 10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/TopWall"]
 shape = SubResource("RectangleShape2D_xkndl")
@@ -61,9 +59,10 @@ offset_bottom = 10.0
 color = Color(0.38841, 0.000906206, 0.546811, 1)
 
 [node name="BottomWall" type="StaticBody2D" parent="Walls"]
-position = Vector2(575, 638)
+position = Vector2(576, 638)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/BottomWall"]
+position = Vector2(-1, -1)
 shape = SubResource("RectangleShape2D_u44n3")
 
 [node name="ColorRect" type="ColorRect" parent="Walls/BottomWall"]
@@ -73,13 +72,5 @@ offset_right = 576.0
 offset_bottom = 10.0
 color = Color(0.38841, 0.000906206, 0.546811, 1)
 
-[node name="Enemies" type="Node2D" parent="."]
-
-[node name="Enemy" parent="Enemies" instance=ExtResource("2_xkndl")]
-position = Vector2(857, 191)
-
-[node name="Enemy2" parent="Enemies" instance=ExtResource("2_xkndl")]
-position = Vector2(909, 331)
-
-[node name="Enemy3" parent="Enemies" instance=ExtResource("2_xkndl")]
-position = Vector2(530, 120)
+[node name="EnemySpawner" parent="." instance=ExtResource("3_j5yw3")]
+position = Vector2(576, 324)

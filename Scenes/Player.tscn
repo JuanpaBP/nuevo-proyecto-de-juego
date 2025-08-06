@@ -1,29 +1,34 @@
-[gd_scene load_steps=4 format=3 uid="uid://cw472yk2eb2nb"]
+[gd_scene load_steps=6 format=3 uid="uid://cw472yk2eb2nb"]
 
 [ext_resource type="Script" uid="uid://cfegnstouktfh" path="res://Scripts/player.gd" id="1_4flbx"]
+[ext_resource type="PackedScene" uid="uid://bxpstd28tohy2" path="res://Scenes/FloatingHealthBar.tscn" id="2_kyqiw"]
+[ext_resource type="Texture2D" uid="uid://dww2m8r8e37ue" path="res://Assets/Carly_2.png" id="3_gntrk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sh265"]
-size = Vector2(39, 39)
+size = Vector2(50, 50)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4flbx"]
-size = Vector2(40, 40)
+size = Vector2(50, 50)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_4flbx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(20.5, 19.5)
 shape = SubResource("RectangleShape2D_sh265")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
-
 [node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(20, 20)
 shape = SubResource("RectangleShape2D_4flbx")
+
+[node name="FloatingHealthBar" parent="." instance=ExtResource("2_kyqiw")]
+position = Vector2(0, -34)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_gntrk")
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="area_exited" from="Hitbox" to="." method="_on_hitbox_area_exited"]

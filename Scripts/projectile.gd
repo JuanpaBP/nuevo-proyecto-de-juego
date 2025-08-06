@@ -44,17 +44,20 @@ func on_timeout():
 	queue_free()
 	print("Projectile despawned!") # Debugging print when it's removed
 
-func _on_area_entered(body: Node):
-	print("Projectile collided with: ", body.name, " (Type: ", body.get_class(), ")") # Debugging print
-
+func _on_area_entered(area: Area2D):
+	print("Projectile entered area: ", area.name)
+	print("  Area's class: ", area.get_class())
+	print("  Area's collision layer: ", area.collision_layer)
+	print("  Area's collision mask: ", area.collision_mask)
+	# Debugging print
 	# Check if the collided 'body' is an Enemy.
 	# We can check its type using 'is' keyword or its name.
 	# 'is CharacterBody2D' checks if it's a CharacterBody2D (which Enemy is).
 	# You could also check 'if body.name == "Enemy"' but checking class is more robust.
-	if body.name.begins_with("Enemy"):
+	if area.is_in_group("enemies"):
 		# Call the 'take_hit()' function on the collided enemy.
 		# Ensure the 'Enemy.gd' script has a 'take_hit()' function.
-		body.take_hit()
+		area.take_hit()
 		print("Projectile hit an enemy!")
 		queue_free()
 		print("Projectile despawned by collision!")
