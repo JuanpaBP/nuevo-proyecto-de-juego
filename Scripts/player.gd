@@ -4,7 +4,7 @@ var speed = 200 # Pixels per second
 var current_direction = Vector2(1, 0) # Initial direction: Vector2(x, y) (1,0) means right
 
 #Projectile variables
-var ProjectileScene = preload("res://Projectile.tscn")
+var ProjectileScene = preload("res://Scenes/Projectile.tscn")
 var can_shoot = true # A flag to control if the player can shoot right now
 var shoot_cooldown_time = 0.3 # Time (in seconds) between shots
 var shoot_timer = 0.0 # Internal timer to track cooldown progress
@@ -26,13 +26,6 @@ func _ready():
 	if current_direction == Vector2.ZERO:
 		current_direction = Vector2(1, 0) # Default to shooting right if player isn't moving
 	
-	# --- Adding the reference and connect signals from the Hitbox node
-	hitbox = get_node("Hitbox")
-	if hitbox != null:
-		hitbox.area_entered.connect(_on_hitbox_area_entered)
-		hitbox.area_exited.connect(_on_hitbox_area_exited)
-	else:
-		print("ERROR: Hitbox node 'Hitbox not found!")
 
 func _physics_process(delta):
 	_movement()
@@ -106,6 +99,9 @@ func take_damage(amount):
 		# For now, let's just remove the player from the scene
 		queue_free()
 
+
+#These 2 functions should be "connected" to the signal that the area emits
+#And this can be done in the ready function, but it can also be done visually using Godot nodes and signals.
 func _on_hitbox_area_entered(area: Area2D):
 	if area.name.begins_with("Enemy"):
 		overlapping_enemies += 1
