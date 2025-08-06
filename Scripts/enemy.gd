@@ -9,7 +9,12 @@ var hp = 100
 var is_chasing = true
 
 func _ready():
-	print("Enemy spawned at: ", global_position)
+	print("Enemy spawned at: ", global_position)	
+
+	#Adding enemies to a group to improve projectile detection
+	add_to_group("enemies")
+	print("Enemy ", name, " Added to 'enemies' group")
+
 	# Find the player node using its full scene path.
 	player_node = get_node("/root/Game/Player")
 
@@ -20,7 +25,6 @@ func _ready():
 func _process(delta):
 	# This is a non-physics based process function.
 	# It's called every frame, so we use it for our movement logic.
-
 	# Only chase if the player node exists and is_chasing is true
 	if player_node != null and is_chasing:
 		# Calculate the direction vector from the enemy to the player
@@ -32,8 +36,8 @@ func _process(delta):
 # --- Function: Handling Projectile Hits ---
 # This function is still called by the Projectile when it hits this enemy.
 func take_hit():
-	print("Enemy hit! Removing enemy.")
 	hp = hp - 20
 	 # Debugging print
 	if(hp <= 0):
+		print("Enemy is dead, removing it from scene")
 		queue_free() # Remove the enemy from the scene

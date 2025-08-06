@@ -22,10 +22,15 @@ var overlapping_enemies = 0 # Counter for how many enemies are currently overlap
 
 var hitbox: Area2D = null
 
+@onready var floatingHealthBar = $FloatingHealthBar #Again, we get the reference to a child node.
+#Different from what we did for the projectile (although both are scenes) because the projectile is
+#A separated scene, while the health bar is a child of the Player Node. 
+
 func _ready():
 	if current_direction == Vector2.ZERO:
 		current_direction = Vector2(1, 0) # Default to shooting right if player isn't moving
-	
+	#Initialize the healthbar
+	update_health(max_health)
 
 func _physics_process(delta):
 	_movement()
@@ -94,20 +99,29 @@ func take_damage(amount):
 	health -= amount
 	print("Player took ", amount, " damage! Current health: ", health)
 	# Check for death condition
+	update_health(health)
 	if health <= 0:
 		print("Player has died!")
 		# For now, let's just remove the player from the scene
 		queue_free()
 
 
+func update_health(current: float):
+	if floatingHealthBar:
+		floatingHealthBar.update_health(current, max_health)
+	else:
+		print("ERROR: The healthbar is not found")
+
+
+
 #These 2 functions should be "connected" to the signal that the area emits
 #And this can be done in the ready function, but it can also be done visually using Godot nodes and signals.
 func _on_hitbox_area_entered(area: Area2D):
-	if area.name.begins_with("Enemy"):
+	if area.is_in_group("enemies"):
 		overlapping_enemies += 1
-		print("Enemy entered player area. Overlapping enemis: ", overlapping_enemies)
+		print("Enemy entered player area. Overlapping enemies: ", overlapping_enemies)
 
 func _on_hitbox_area_exited(area: Area2D):
-	if area.name.begins_with("Enemy"):
+	if area.is_in_group("enemies"):
 		overlapping_enemies -= 1
 		print("Enemy exited player area. Overlapping enemies: ", overlapping_enemies)
