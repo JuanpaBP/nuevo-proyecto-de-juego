@@ -26,11 +26,18 @@ var hitbox: Area2D = null
 #Different from what we did for the projectile (although both are scenes) because the projectile is
 #A separated scene, while the health bar is a child of the Player Node. 
 
+@onready var player_sprite = $Sprite2D
+var sprite_right = preload("res://Assets/Carly_right.png")
+var sprite_left = preload("res://Assets/Carly_left.png")
+
+signal died
+
 func _ready():
 	if current_direction == Vector2.ZERO:
 		current_direction = Vector2(1, 0) # Default to shooting right if player isn't moving
 	#Initialize the healthbar
 	update_health(max_health)
+	player_sprite.texture = sprite_right
 
 func _physics_process(delta):
 	_movement()
@@ -41,6 +48,13 @@ func _physics_process(delta):
 		if damage_timer > damage_tick_rate:
 			take_damage(damage_per_tick * overlapping_enemies)
 			damage_timer = 0
+	if current_direction.x > 0:
+		player_sprite.texture = sprite_right
+	elif current_direction.x < 0:
+		player_sprite.texture = sprite_left
+	
+	
+	
 	
 func shoot(delta):
 	if not can_shoot: # If currently on cooldown
@@ -103,6 +117,7 @@ func take_damage(amount):
 	if health <= 0:
 		print("Player has died!")
 		# For now, let's just remove the player from the scene
+		died.emit()
 		queue_free()
 
 

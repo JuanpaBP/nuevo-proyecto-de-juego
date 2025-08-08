@@ -4,6 +4,8 @@ var speed = 100 # Enemy movement speed (pixels per second)
 var player_node: Node = null # Reference to the player node
 var hp = 100
 
+signal defeated
+
 # A boolean to store whether the enemy should be chasing the player.
 # We will use this later if we add another enemy type.
 var is_chasing = true
@@ -40,4 +42,5 @@ func take_hit():
 	 # Debugging print
 	if(hp <= 0):
 		print("Enemy is dead, removing it from scene")
+		defeated.emit()
 		queue_free() # Remove the enemy from the scene

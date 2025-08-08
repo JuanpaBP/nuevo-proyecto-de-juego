@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dqqv4kmlee8mu"]
+[gd_scene load_steps=7 format=3 uid="uid://dqqv4kmlee8mu"]
 
+[ext_resource type="Script" uid="uid://beqd52yrbeab0" path="res://Scenes/game.gd" id="1_j5yw3"]
 [ext_resource type="PackedScene" uid="uid://cw472yk2eb2nb" path="res://Scenes/Player.tscn" id="1_wbfu4"]
 [ext_resource type="PackedScene" uid="uid://br311ouioaig6" path="res://Scenes/EnemySpawner.tscn" id="3_j5yw3"]
 
@@ -13,9 +14,10 @@ size = Vector2(1152, 20)
 size = Vector2(1152, 20)
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_j5yw3")
 
 [node name="Player" parent="." instance=ExtResource("1_wbfu4")]
-position = Vector2(563, 275)
+position = Vector2(576, 324)
 
 [node name="Walls" type="Node2D" parent="."]
 
@@ -74,3 +76,24 @@ color = Color(0.38841, 0.000906206, 0.546811, 1)
 
 [node name="EnemySpawner" parent="." instance=ExtResource("3_j5yw3")]
 position = Vector2(576, 324)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MessageLabel" type="Label" parent="CanvasLayer"]
+process_mode = 3
+offset_left = 512.0
+offset_top = 273.0
+offset_right = 641.0
+offset_bottom = 322.0
+text = "Default Message
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RestartButton" type="Button" parent="CanvasLayer"]
+process_mode = 3
+offset_left = 541.0
+offset_top = 308.5
+offset_right = 611.0
+offset_bottom = 339.5
+text = "Restart"
