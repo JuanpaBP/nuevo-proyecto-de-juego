@@ -9,7 +9,6 @@ var EnemyScene = preload("res://Scenes/Enemy.tscn")
 
 var defeated_count = 0
 signal all_enemies_defeated
-signal remove_enemies_from_scene
 
 #This function is always the same, and its always called when the node enters
 #the scene tree(ie: the game starts and there's a node that preloads this scene
