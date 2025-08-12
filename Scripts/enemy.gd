@@ -10,6 +10,10 @@ signal defeated
 # We will use this later if we add another enemy type.
 var is_chasing = true
 
+@onready var rober_sprite = $Sprite2D
+var sprite_right = preload("res://Assets/Rober_right.png")
+var sprite_left = preload("res://Assets/Rober_left.png")
+
 func _ready():
 	print("Enemy spawned at: ", global_position)	
 
@@ -34,6 +38,10 @@ func _process(delta):
 
 		# Move the enemy directly by updating its position
 		position += direction_to_player * speed * delta
+		if direction_to_player.x > 0:
+			rober_sprite.texture = sprite_right
+		elif direction_to_player.x < 0:
+			rober_sprite.texture = sprite_left
 
 # --- Function: Handling Projectile Hits ---
 # This function is still called by the Projectile when it hits this enemy.
