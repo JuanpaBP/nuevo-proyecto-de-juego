@@ -44,3 +44,6 @@ func take_hit():
 		print("Enemy is dead, removing it from scene")
 		defeated.emit()
 		queue_free() # Remove the enemy from the scene
+		
+func _remove_from_scene():
+	queue_free()

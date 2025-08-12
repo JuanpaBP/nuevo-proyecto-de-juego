@@ -33,7 +33,6 @@ func spawn_enemies():
 		
 		enemy_instance.defeated.connect(_on_enemy_defeated)
 		
-		
 		# With this, set the enemy world position
 		#It has to be positioned bearing in mind the spawner's global position
 		enemy_instance.global_position = global_position + random_offset
@@ -51,3 +50,6 @@ func _on_enemy_defeated():
 	if defeated_count >= num_enemies_to_spawn:
 		print("All enemies defeated!")
 		all_enemies_defeated.emit()
+		
+func clean_enemies_from_scene():
+	get_tree().call_group("enemies","_remove_from_scene")

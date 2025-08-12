@@ -30,8 +30,6 @@ func _ready():
 	enemy_spawner.all_enemies_defeated.connect(_on_victory_trigger)
 	enemy_spawner.spawn_enemies()
 	
-	
-	
 	print("Initial enemy count: ", enemy_count)
 	
 
@@ -57,4 +55,5 @@ func _on_restart_button_pressed():
 	print("Restart game...")
 	get_tree().paused = false
 	# Reload the current scene to restart the game
+	enemy_spawner.clean_enemies_from_scene()
 	get_tree().reload_current_scene()
