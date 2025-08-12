@@ -1,0 +1,64 @@
+[gd_scene load_steps=3 format=3 uid="uid://45hy8eyys24v"]
+
+[ext_resource type="PackedScene" uid="uid://br311ouioaig6" path="res://Scenes/EnemySpawner.tscn" id="1_8y64g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_52pty"]
+size = Vector2(648, 20)
+
+[node name="Room" type="Node2D"]
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="TopWall" type="StaticBody2D" parent="Walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/TopWall"]
+position = Vector2(576, 10)
+shape = SubResource("RectangleShape2D_52pty")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/TopWall"]
+offset_right = 1152.0
+offset_bottom = 20.0
+color = Color(0.388235, 0, 0.545098, 1)
+
+[node name="BottomWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, 638)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/BottomWall"]
+position = Vector2(576, 10)
+shape = SubResource("RectangleShape2D_52pty")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/BottomWall"]
+offset_right = 1152.0
+offset_bottom = 20.0
+color = Color(0.388235, 0, 0.545098, 1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall"]
+position = Vector2(10, 324)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_52pty")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/LeftWall"]
+offset_left = 20.0
+offset_right = 668.0
+offset_bottom = 20.0
+rotation = 1.5708
+color = Color(0.388235, 0, 0.545098, 1)
+
+[node name="RightWall" type="StaticBody2D" parent="Walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
+position = Vector2(1142, 324)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_52pty")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/RightWall"]
+offset_left = 1152.0
+offset_right = 1800.0
+offset_bottom = 20.0
+rotation = 1.5708
+color = Color(0.388235, 0, 0.545098, 1)
+
+[node name="EnemySpawner" parent="." instance=ExtResource("1_8y64g")]
+position = Vector2(576, 324)
