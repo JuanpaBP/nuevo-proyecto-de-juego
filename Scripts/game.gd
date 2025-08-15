@@ -9,6 +9,7 @@ var EnemyScene = preload("res://Scenes/Enemy.tscn")
 @onready var message_label = $CanvasLayer/MessageLabel
 @onready var restart_button = $CanvasLayer/RestartButton
 
+var enemy_spawner = null
 var enemy_count = 5
 
 func _ready():
@@ -27,7 +28,7 @@ func _ready():
 	
 	#Initial enemy spawn.
 	if room_node.get_node_or_null("EnemySpawner"):
-		var enemy_spawner = room_node.get_node("EnemySpawner")
+		enemy_spawner = room_node.get_node("EnemySpawner")
 		enemy_spawner.num_enemies_to_spawn = enemy_count
 		enemy_spawner.all_enemies_defeated.connect(_on_victory_trigger)
 		enemy_spawner.spawn_enemies()

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dqqv4kmlee8mu"]
 
-[ext_resource type="Script" uid="uid://beqd52yrbeab0" path="res://Scenes/game.gd" id="1_j5yw3"]
+[ext_resource type="Script" uid="uid://beqd52yrbeab0" path="res://Scripts/game.gd" id="1_j5yw3"]
 [ext_resource type="PackedScene" uid="uid://cw472yk2eb2nb" path="res://Scenes/Player.tscn" id="1_wbfu4"]
 [ext_resource type="PackedScene" uid="uid://45hy8eyys24v" path="res://Scenes/Rooms/room_forest_1.tscn" id="3_j5yw3"]
 
