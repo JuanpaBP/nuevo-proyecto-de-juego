@@ -14,9 +14,10 @@ var is_chasing = true
 var sprite_right = preload("res://Assets/Rober_right.png")
 var sprite_left = preload("res://Assets/Rober_left.png")
 
-
+# Variables for the bouncing of each other
 var push_factor = 3000.0 # Magic number to calculate push force.
 var max_push_speed = 50.0
+var push_velocity = Vector2.ZERO
 
 
 
@@ -31,6 +32,8 @@ func _ready():
 		print("Please ensure your main scene's root is named 'Game' and your player node is named 'Player'.")
 
 func _process(delta):
+	position += push_velocity * delta
+	push_velocity = push_velocity.move_toward(Vector2.ZERO, delta * 1000)
 	# This is a non-physics based process function.
 	# It's called every frame, so we use it for our movement logic.
 	# Only chase if the player node exists and is_chasing is true
@@ -73,16 +76,15 @@ func _apply_soft_collision():
 		
 		#If they are very close, push them away
 		if distance < 40.0: #Magic number, this should be adjusted
-			print("Distance is less than 40, entering...")
 			var push_direction = distance_vector.normalized()
-			print("Push direction is ", push_direction)
 			#The more overlapped they are, the more force the push has.
 			var push_force = 40.0 - distance
-			print("Push force is ", push_force)
 	
 			var total_push = push_direction * push_force * push_factor * get_process_delta_time()
-			print("Total push is ", total_push)
 			total_push = total_push.limit_length(max_push_speed)
-			print("Total push after limit is: ", total_push)
-			global_position += total_push * 0.5
-			area.global_position -= total_push * 0.5
+			# --- CORRECTION: Apply push to a separate velocity vector instead of position. ---
+			push_velocity += total_push * 0.5
+			area.apply_push(-total_push * 0.5)
+
+func apply_push(push_vector):
+	push_velocity += push_vector

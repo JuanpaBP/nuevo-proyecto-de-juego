@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bo7jix1tvex1c" path="res://Assets/Rober_right.png" id="2_wovta"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gqquq"]
-size = Vector2(40, 40)
+size = Vector2(35, 35)
 
 [node name="Enemy" type="Area2D" groups=["enemies"]]
 collision_layer = 2
