@@ -1,64 +1,84 @@
-[gd_scene load_steps=3 format=3 uid="uid://45hy8eyys24v"]
+[gd_scene load_steps=7 format=3 uid="uid://45hy8eyys24v"]
 
+[ext_resource type="Texture2D" uid="uid://b3m2qdw21elwc" path="res://Assets/woods_floor.png" id="1_3yfi3"]
 [ext_resource type="PackedScene" uid="uid://br311ouioaig6" path="res://Scenes/EnemySpawner.tscn" id="1_8y64g"]
+[ext_resource type="Texture2D" uid="uid://c814thj15e8ek" path="res://Assets/woods_walls.png" id="2_d0fdb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8y64g"]
+size = Vector2(1152, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3yfi3"]
+size = Vector2(1152, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_52pty"]
-size = Vector2(648, 20)
+size = Vector2(648, 40)
 
 [node name="Room" type="Node2D"]
+
+[node name="FloorBG" type="TextureRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("1_3yfi3")
+stretch_mode = 1
 
 [node name="Walls" type="Node2D" parent="."]
 
 [node name="TopWall" type="StaticBody2D" parent="Walls"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/TopWall"]
-position = Vector2(576, 10)
-shape = SubResource("RectangleShape2D_52pty")
+position = Vector2(576, 20)
+shape = SubResource("RectangleShape2D_8y64g")
 
-[node name="ColorRect" type="ColorRect" parent="Walls/TopWall"]
+[node name="TextureRect" type="TextureRect" parent="Walls/TopWall"]
 offset_right = 1152.0
-offset_bottom = 20.0
-color = Color(0.388235, 0, 0.545098, 1)
+offset_bottom = 40.0
+texture = ExtResource("2_d0fdb")
+expand_mode = 1
+stretch_mode = 1
 
 [node name="BottomWall" type="StaticBody2D" parent="Walls"]
 position = Vector2(0, 638)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/BottomWall"]
-position = Vector2(576, 10)
-shape = SubResource("RectangleShape2D_52pty")
+position = Vector2(576, -10)
+shape = SubResource("RectangleShape2D_3yfi3")
 
-[node name="ColorRect" type="ColorRect" parent="Walls/BottomWall"]
+[node name="TextureRect" type="TextureRect" parent="Walls/BottomWall"]
+offset_top = -30.0
 offset_right = 1152.0
-offset_bottom = 20.0
-color = Color(0.388235, 0, 0.545098, 1)
+offset_bottom = 10.0
+texture = ExtResource("2_d0fdb")
+expand_mode = 1
+stretch_mode = 1
 
 [node name="LeftWall" type="StaticBody2D" parent="Walls"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall"]
-position = Vector2(10, 324)
+position = Vector2(20, 324)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_52pty")
 
-[node name="ColorRect" type="ColorRect" parent="Walls/LeftWall"]
-offset_left = 20.0
-offset_right = 668.0
-offset_bottom = 20.0
-rotation = 1.5708
-color = Color(0.388235, 0, 0.545098, 1)
+[node name="TextureRect" type="TextureRect" parent="Walls/LeftWall"]
+offset_right = 40.0
+offset_bottom = 648.0
+texture = ExtResource("2_d0fdb")
+expand_mode = 1
+stretch_mode = 1
 
 [node name="RightWall" type="StaticBody2D" parent="Walls"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
-position = Vector2(1142, 324)
+position = Vector2(1132, 324)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_52pty")
 
-[node name="ColorRect" type="ColorRect" parent="Walls/RightWall"]
-offset_left = 1152.0
-offset_right = 1800.0
-offset_bottom = 20.0
-rotation = 1.5708
-color = Color(0.388235, 0, 0.545098, 1)
+[node name="TextureRect" type="TextureRect" parent="Walls/RightWall"]
+offset_left = 1112.0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("2_d0fdb")
+expand_mode = 1
+stretch_mode = 1
 
 [node name="EnemySpawner" parent="." instance=ExtResource("1_8y64g")]
 position = Vector2(576, 324)

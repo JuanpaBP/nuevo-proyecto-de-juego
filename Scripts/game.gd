@@ -9,8 +9,9 @@ var EnemyScene = preload("res://Scenes/Enemy.tscn")
 @onready var message_label = $CanvasLayer/MessageLabel
 @onready var restart_button = $CanvasLayer/RestartButton
 
+@export var enemy_count = 2
+
 var enemy_spawner = null
-var enemy_count = 5
 
 func _ready():
 	print("Game _ready() called.")
