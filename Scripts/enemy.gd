@@ -14,12 +14,15 @@ var is_chasing = true
 var sprite_right = preload("res://Assets/Rober_right.png")
 var sprite_left = preload("res://Assets/Rober_left.png")
 
-func _ready():
-	print("Enemy spawned at: ", global_position)	
+# Variables for the bouncing of each other
+var push_factor = 3000.0 # Magic number to calculate push force.
+var max_push_speed = 50.0
+var push_velocity = Vector2.ZERO
 
-	#Adding enemies to a group to improve projectile detection
-	add_to_group("enemies")
-	print("Enemy ", name, " Added to 'enemies' group")
+
+
+func _ready():
+	print("Enemy spawned at: ", global_position)
 
 	# Find the player node using its full scene path.
 	player_node = get_node("/root/Game/Player")
@@ -29,9 +32,12 @@ func _ready():
 		print("Please ensure your main scene's root is named 'Game' and your player node is named 'Player'.")
 
 func _process(delta):
+	position += push_velocity * delta
+	push_velocity = push_velocity.move_toward(Vector2.ZERO, delta * 1000)
 	# This is a non-physics based process function.
 	# It's called every frame, so we use it for our movement logic.
 	# Only chase if the player node exists and is_chasing is true
+	_apply_soft_collision()
 	if player_node != null and is_chasing:
 		# Calculate the direction vector from the enemy to the player
 		var direction_to_player = (player_node.global_position - global_position).normalized()
@@ -55,3 +61,30 @@ func take_hit():
 		
 func _remove_from_scene():
 	queue_free()
+
+func _apply_soft_collision():
+	var overlapping_enemies = get_overlapping_areas()
+	for area in overlapping_enemies:
+		#Make sure we're not checking against ourselves (?
+		if area == self or not area.is_in_group("enemies"):
+			continue
+		
+		
+		#Distance between 2 enemies
+		var distance_vector = global_position - area.global_position
+		var distance = distance_vector.length()
+		
+		#If they are very close, push them away
+		if distance < 40.0: #Magic number, this should be adjusted
+			var push_direction = distance_vector.normalized()
+			#The more overlapped they are, the more force the push has.
+			var push_force = 40.0 - distance
+	
+			var total_push = push_direction * push_force * push_factor * get_process_delta_time()
+			total_push = total_push.limit_length(max_push_speed)
+			# --- CORRECTION: Apply push to a separate velocity vector instead of position. ---
+			push_velocity += total_push * 0.5
+			area.apply_push(-total_push * 0.5)
+
+func apply_push(push_vector):
+	push_velocity += push_vector

@@ -4,7 +4,7 @@ extends Node2D
 #and follow camelCase as a separator, but normal variables use _ to separate words
 var EnemyScene = preload("res://Scenes/Enemy.tscn")
 
-@export var num_enemies_to_spawn = 5
+@export var num_enemies_to_spawn = 2
 @export var spawn_radius = 300
 
 var defeated_count = 0
