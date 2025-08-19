@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 var speed = 200 # Pixels per second
 var current_direction = Vector2(1, 0) # Initial direction: Vector2(x, y) (1,0) means right
+var last_direction = current_direction # used for shooting. #If current_direction is (0, 0) bullet doesnt fly 
 
 #Projectile variables
 var ProjectileScene = preload("res://Scenes/Projectile.tscn")
@@ -77,11 +78,12 @@ func shoot(delta):
 		# 'current_direction * offset' moves it away from the player.
 		# Calculation for offset: half of player size (50/2 = 25) + half of projectile size (20/2 = 10) + a small gap (e.g., 5) = 40
 		var spawn_offset = 40 # Adjust this value if projectiles spawn too close/far
-		projectile_instance.global_position = global_position + current_direction * spawn_offset
+					
+		projectile_instance.global_position = global_position + last_direction * spawn_offset
 		
 		# 3. Set the projectile's direction.
 		# We call the 'set_direction' function that we created in Projectile.gd.
-		projectile_instance.set_direction(current_direction)
+		projectile_instance.set_direction(last_direction)
 		
 		# 4. Add the projectile instance to the active scene tree.
 		# IMPORTANT: We add it as a child of the 'Game' node (the player's parent),
@@ -89,23 +91,14 @@ func shoot(delta):
 		get_parent().add_child(projectile_instance)
 		print("Shot fired! Projectile spawned.") #Debugging confirmation
 
-func _movement():
-	if Input.is_action_pressed("ui_up"):
-		current_direction = Vector2(0, -1) # Move Up (Y-axis negative is up in 2D)
-	elif Input.is_action_pressed("ui_down"):
-		current_direction = Vector2(0, 1)  # Move Down (Y-axis positive is down in 2D)
-	elif Input.is_action_pressed("ui_left"):
-		current_direction = Vector2(-1, 0) # Move Left (X-axis negative)
-	elif Input.is_action_pressed("ui_right"):
-		current_direction = Vector2(1, 0)  # Move Right (X-axis positive)
-
-	# Debugging prints (optional, remove once confident)
-	# print("Current direction AFTER input check: ", current_direction)
-	# print("Speed: ", speed)
-
-	# Calculate velocity based on current_direction and speed
+func get_input():
+	current_direction = Input.get_vector("left", "right", "up", "down")
+	if not Vector2.ZERO.is_equal_approx(current_direction):
+			last_direction = current_direction
 	velocity = current_direction * speed
 
+func _movement():
+	get_input()
 	# Move the character and slide along collisions
 	move_and_slide()
 

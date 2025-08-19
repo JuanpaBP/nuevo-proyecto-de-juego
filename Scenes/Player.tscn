@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cfegnstouktfh" path="res://Scripts/player.gd" id="1_4flbx"]
 [ext_resource type="PackedScene" uid="uid://bxpstd28tohy2" path="res://Scenes/FloatingHealthBar.tscn" id="2_kyqiw"]
-[ext_resource type="Texture2D" uid="uid://dww2m8r8e37ue" path="res://Assets/Carly_right.png" id="3_gntrk"]
+[ext_resource type="Texture2D" uid="uid://b1etx5fl0i78c" path="res://Assets/Carly_right.png" id="3_gntrk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sh265"]
 size = Vector2(50, 50)
