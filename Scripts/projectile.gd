@@ -12,7 +12,7 @@ func _ready():
 	# Connect the 'body_entered' signal.
 	# This signal is emitted when another physics body enters this Area2D's collision shape.
 	# We connect it to our custom function '_on_body_entered'.
-	area_entered.connect(_on_area_entered)
+	body_entered.connect(_on_body_entered)
 	
 	# Create a timer to automatically remove the projectile after its lifetime.
 	# get_tree() refers to the current scene tree.
@@ -44,20 +44,20 @@ func on_timeout():
 	queue_free()
 	print("Projectile despawned!") # Debugging print when it's removed
 
-func _on_area_entered(area: Area2D):
-	print("Projectile entered area: ", area.name)
-	print("  Area's class: ", area.get_class())
-	print("  Area's collision layer: ", area.collision_layer)
-	print("  Area's collision mask: ", area.collision_mask)
+func _on_body_entered(body: CharacterBody2D):
+	print("Projectile entered area: ", body.name)
+	print("  Area's class: ", body.get_class())
+	print("  Area's collision layer: ", body.collision_layer)
+	print("  Area's collision mask: ", body.collision_mask)
 	# Debugging print
 	# Check if the collided 'body' is an Enemy.
 	# We can check its type using 'is' keyword or its name.
 	# 'is CharacterBody2D' checks if it's a CharacterBody2D (which Enemy is).
 	# You could also check 'if body.name == "Enemy"' but checking class is more robust.
-	if area.is_in_group("enemies"):
+	if body.is_in_group("enemies"):
 		# Call the 'take_hit()' function on the collided enemy.
 		# Ensure the 'Enemy.gd' script has a 'take_hit()' function.
-		area.take_hit()
+		body.take_hit()
 		print("Projectile hit an enemy!")
 		queue_free()
 		print("Projectile despawned by collision!")

@@ -24,6 +24,7 @@ stretch_mode = 1
 [node name="Walls" type="Node2D" parent="."]
 
 [node name="TopWall" type="StaticBody2D" parent="Walls"]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/TopWall"]
 position = Vector2(576, 20)
@@ -38,6 +39,7 @@ stretch_mode = 1
 
 [node name="BottomWall" type="StaticBody2D" parent="Walls"]
 position = Vector2(0, 638)
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/BottomWall"]
 position = Vector2(576, -10)
@@ -52,6 +54,7 @@ expand_mode = 1
 stretch_mode = 1
 
 [node name="LeftWall" type="StaticBody2D" parent="Walls"]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall"]
 position = Vector2(20, 324)
@@ -66,6 +69,7 @@ expand_mode = 1
 stretch_mode = 1
 
 [node name="RightWall" type="StaticBody2D" parent="Walls"]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
 position = Vector2(1132, 324)

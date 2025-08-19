@@ -54,15 +54,11 @@ func _physics_process(delta):
 	elif current_direction.x < 0:
 		player_sprite.texture = sprite_left
 	
-	
-	
-	
 func shoot(delta):
 	if not can_shoot: # If currently on cooldown
 		shoot_timer -= delta # Decrease the timer by the time since last frame
 		if shoot_timer <= 0: # If timer has run out
 			can_shoot = true # Allow shooting again
-			
 			
 	if Input.is_action_just_pressed("ui_accept") and can_shoot:
 		can_shoot = false # Start cooldown
@@ -124,16 +120,16 @@ func update_health(current: float):
 	else:
 		print("ERROR: The healthbar is not found")
 
-
-
 #These 2 functions should be "connected" to the signal that the area emits
 #And this can be done in the ready function, but it can also be done visually using Godot nodes and signals.
-func _on_hitbox_area_entered(area: Area2D):
-	if area.is_in_group("enemies"):
+
+func _on_hitbox_body_entered(body: Node2D):
+	if body.is_in_group("enemies"):
 		overlapping_enemies += 1
 		print("Enemy entered player area. Overlapping enemies: ", overlapping_enemies)
 
-func _on_hitbox_area_exited(area: Area2D):
-	if area.is_in_group("enemies"):
+
+func _on_hitbox_body_exited(body: Node2D):
+	if body.is_in_group("enemies"):
 		overlapping_enemies -= 1
 		print("Enemy exited player area. Overlapping enemies: ", overlapping_enemies)
