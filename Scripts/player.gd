@@ -92,6 +92,10 @@ func shoot(delta):
 		print("Shot fired! Projectile spawned.") #Debugging confirmation
 
 func get_input():
+	# Input.get_vector returns a vector2 value created by passing the four Input actions 
+	# for the positive and negative X and Y axes (defined in the Input Map).
+	# (already manages Vector calculations that allows user avoid a typical bug where
+	# a character moves faster diagonally than in straight lines because of failed mathzzz)
 	current_direction = Input.get_vector("left", "right", "up", "down")
 	if not Vector2.ZERO.is_equal_approx(current_direction):
 			last_direction = current_direction
