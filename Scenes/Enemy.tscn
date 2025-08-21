@@ -1,21 +1,31 @@
-[gd_scene load_steps=4 format=3 uid="uid://b7e2ydfn42bp0"]
+[gd_scene load_steps=5 format=3 uid="uid://b7e2ydfn42bp0"]
 
 [ext_resource type="Script" uid="uid://bans0m0t44twd" path="res://Scripts/enemy.gd" id="1_tt7e2"]
 [ext_resource type="Texture2D" uid="uid://bo7jix1tvex1c" path="res://Assets/Rober_right.png" id="2_wovta"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wovta"]
+size = Vector2(40, 40)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gqquq"]
 size = Vector2(35, 35)
 
-[node name="Enemy" type="Area2D" groups=["enemies"]]
-collision_layer = 2
+[node name="Enemy" type="CharacterBody2D" groups=["enemies"]]
+collision_layer = 4
 collision_mask = 2
 script = ExtResource("1_tt7e2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(20, 20)
-shape = SubResource("RectangleShape2D_gqquq")
+shape = SubResource("RectangleShape2D_wovta")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(20, 20)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_wovta")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(20, 20)
+shape = SubResource("RectangleShape2D_gqquq")
