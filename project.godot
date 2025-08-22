@@ -25,15 +25,11 @@ project/assembly_name="Nuevo Proyecto de Juego"
 
 [editor]
 
-movie_writer/mjpeg_quality=0.06
+movie_writer/mix_rate=16000
+movie_writer/mjpeg_quality=0.12
 movie_writer/movie_file="D:/test1.avi"
 movie_writer/disable_vsync=true
 
-
-; Input Map (is better edited using UI editor in Configuration Project -> Input Map)
-; Mapping provided by engine. Used to associate input methods to actions defined by the developer.
-; example: "Left" is defined to use "A" and "left" key on keyboard
-;			"deadzone" is used for analog kind of controllers
 [input]
 
 left={
@@ -65,3 +61,13 @@ attack={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":32,"key_label":0,"unicode":32,"location":0,"echo":false,"script":null)
 ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="Player"
+2d_physics/layer_2="Environment"
+2d_physics/layer_3="Enemies"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

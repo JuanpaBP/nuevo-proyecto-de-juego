@@ -4,14 +4,15 @@ var EnemyScene = preload("res://Scenes/Enemy.tscn")
 
 # This is a reference to the player node in the scene
 @onready var player_node = $Player
-@onready var room_node = $Room
+@onready var enemy_spawner = $EnemySpawner
 
 @onready var message_label = $CanvasLayer/MessageLabel
 @onready var restart_button = $CanvasLayer/RestartButton
+@onready var room_generator = $RoomGenerator
 
 @export var enemy_count = 2
 
-var enemy_spawner = null
+var enemy_list = []
 
 func _ready():
 	print("Game _ready() called.")
@@ -28,13 +29,21 @@ func _ready():
 	restart_button.pressed.connect(_on_restart_button_pressed)
 	
 	#Initial enemy spawn.
-	if room_node.get_node_or_null("EnemySpawner"):
-		enemy_spawner = room_node.get_node("EnemySpawner")
-		enemy_spawner.num_enemies_to_spawn = enemy_count
-		enemy_spawner.all_enemies_defeated.connect(_on_victory_trigger)
-		enemy_spawner.spawn_enemies()
-	else:
-		print("ERROR: Enemy spawner not found inside Room!")
+	enemy_spawner.num_enemies_to_spawn = enemy_count
+	enemy_spawner.all_enemies_defeated.connect(_on_victory_trigger)
+	enemy_list = enemy_spawner.spawn_enemies()
+	print(enemy_list)
+	for enemy in enemy_list:
+		room_generator.position_enemies(enemy)
+	
+
+	#if room_node.get_node_or_null("EnemySpawner"):
+		#enemy_spawner = room_node.get_node("EnemySpawner")
+		#enemy_spawner.num_enemies_to_spawn = enemy_count
+		#enemy_spawner.all_enemies_defeated.connect(_on_victory_trigger)
+		#enemy_list = enemy_spawner.spawn_enemies()
+	#else:
+		#print("ERROR: Enemy spawner not found inside Room!")
 	
 	print("Initial enemy count: ", enemy_count)
 	

@@ -28,8 +28,8 @@ var hitbox: Area2D = null
 #A separated scene, while the health bar is a child of the Player Node. 
 
 @onready var player_sprite = $Sprite2D
-var sprite_right = preload("res://Assets/Carly_right.png")
-var sprite_left = preload("res://Assets/Carly_left.png")
+var sprite_right = preload("res://Assets/Carly32x32_right.png")
+var sprite_left = preload("res://Assets/Carly32x32_left.png")
 
 signal died
 
@@ -85,7 +85,6 @@ func shoot(delta):
 		# IMPORTANT: We add it as a child of the 'Game' node (the player's parent),
 		# NOT as a child of the player. If it were a child of the player, it would move with the player!
 		get_parent().add_child(projectile_instance)
-		print("Shot fired! Projectile spawned.") #Debugging confirmation
 
 func get_input():
 	# Input.get_vector returns a vector2 value created by passing the four Input actions 
@@ -104,7 +103,6 @@ func _movement():
 
 func take_damage(amount):
 	health -= amount
-	print("Player took ", amount, " damage! Current health: ", health)
 	# Check for death condition
 	update_health(health)
 	if health <= 0:
@@ -126,10 +124,8 @@ func update_health(current: float):
 func _on_hitbox_body_entered(body: Node2D):
 	if body.is_in_group("enemies"):
 		overlapping_enemies += 1
-		print("Enemy entered player area. Overlapping enemies: ", overlapping_enemies)
 
 
 func _on_hitbox_body_exited(body: Node2D):
 	if body.is_in_group("enemies"):
 		overlapping_enemies -= 1
-		print("Enemy exited player area. Overlapping enemies: ", overlapping_enemies)

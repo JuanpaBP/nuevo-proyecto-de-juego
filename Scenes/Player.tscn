@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cfegnstouktfh" path="res://Scripts/player.gd" id="1_4flbx"]
 [ext_resource type="PackedScene" uid="uid://bxpstd28tohy2" path="res://Scenes/FloatingHealthBar.tscn" id="2_kyqiw"]
-[ext_resource type="Texture2D" uid="uid://dww2m8r8e37ue" path="res://Assets/Carly_right.png" id="3_gntrk"]
+[ext_resource type="Texture2D" uid="uid://dcuxl4u7pi1qr" path="res://Assets/Carly32x32_right.png" id="3_gntrk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sh265"]
 size = Vector2(50, 50)
@@ -28,7 +28,7 @@ shape = SubResource("RectangleShape2D_4flbx")
 position = Vector2(0, -34)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.25, 0.25)
+scale = Vector2(1.6, 1.6)
 texture = ExtResource("3_gntrk")
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

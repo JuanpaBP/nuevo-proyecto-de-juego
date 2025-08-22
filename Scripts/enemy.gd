@@ -90,5 +90,4 @@ func _apply_soft_collision():
 
 # --- Function to apply push from other enemies. ---
 func apply_push(push_vector):
-	print("apply_push getting called with a vector of: ", push_vector)
 	push_velocity += push_vector

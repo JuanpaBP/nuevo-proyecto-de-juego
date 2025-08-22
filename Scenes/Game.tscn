@@ -1,14 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://dqqv4kmlee8mu"]
+[gd_scene load_steps=6 format=3 uid="uid://dqqv4kmlee8mu"]
 
 [ext_resource type="Script" uid="uid://beqd52yrbeab0" path="res://Scripts/game.gd" id="1_j5yw3"]
 [ext_resource type="PackedScene" uid="uid://cw472yk2eb2nb" path="res://Scenes/Player.tscn" id="1_wbfu4"]
 [ext_resource type="PackedScene" uid="uid://45hy8eyys24v" path="res://Scenes/Rooms/room_forest_1.tscn" id="3_j5yw3"]
+[ext_resource type="PackedScene" uid="uid://br311ouioaig6" path="res://Scenes/EnemySpawner.tscn" id="4_b2bpf"]
+[ext_resource type="PackedScene" uid="uid://b4hbo1uarfhu1" path="res://Scenes/Room_generator_debugger.tscn" id="4_kldst"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_j5yw3")
-enemy_count = 6
 
 [node name="Room" parent="." instance=ExtResource("3_j5yw3")]
+visible = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -30,6 +32,10 @@ offset_top = 308.5
 offset_right = 611.0
 offset_bottom = 339.5
 text = "Restart"
+
+[node name="RoomGenerator" parent="." instance=ExtResource("4_kldst")]
+
+[node name="EnemySpawner" parent="." instance=ExtResource("4_b2bpf")]
 
 [node name="Player" parent="." instance=ExtResource("1_wbfu4")]
 position = Vector2(576, 324)

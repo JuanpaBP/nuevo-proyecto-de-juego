@@ -14,6 +14,7 @@ func _ready():
 	# We connect it to our custom function '_on_body_entered'.
 	body_entered.connect(_on_body_entered)
 	
+	
 	# Create a timer to automatically remove the projectile after its lifetime.
 	# get_tree() refers to the current scene tree.
 	# create_timer() creates a one-shot timer.
@@ -44,24 +45,13 @@ func on_timeout():
 	queue_free()
 	print("Projectile despawned!") # Debugging print when it's removed
 
-func _on_body_entered(body: CharacterBody2D):
-	print("Projectile entered area: ", body.name)
-	print("  Area's class: ", body.get_class())
-	print("  Area's collision layer: ", body.collision_layer)
-	print("  Area's collision mask: ", body.collision_mask)
-	# Debugging print
-	# Check if the collided 'body' is an Enemy.
-	# We can check its type using 'is' keyword or its name.
-	# 'is CharacterBody2D' checks if it's a CharacterBody2D (which Enemy is).
-	# You could also check 'if body.name == "Enemy"' but checking class is more robust.
+func _on_body_entered(body: Node2D):
 	if body.is_in_group("enemies"):
-		# Call the 'take_hit()' function on the collided enemy.
-		# Ensure the 'Enemy.gd' script has a 'take_hit()' function.
 		body.take_hit()
 		print("Projectile hit an enemy!")
 		queue_free()
 		print("Projectile despawned by collision!")
-
-	# After hitting anything (or specifically an enemy), the projectile should disappear.
-	# This prevents the projectile from going through multiple enemies or walls.
- # Debugging print
+	elif body is StaticBody2D:
+		print("Collided with a wall, despawning")
+		queue_free()
+		print("Despawned")
