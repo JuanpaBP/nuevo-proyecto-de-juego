@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7yupo454ka63"]
+
+[ext_resource type="Texture2D" uid="uid://bvykhh11wbki8" path="res://Assets/Stone_1.png" id="1_5b6tv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5xaav"]
+radius = 32.0
+
+[node name="Stone" type="Node2D"]
+
+[node name="Stone1" type="Sprite2D" parent="."]
+position = Vector2(32, 32)
+scale = Vector2(2, 2)
+texture = ExtResource("1_5b6tv")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(32, 32)
+collision_layer = 2
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("CircleShape2D_5xaav")
