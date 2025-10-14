@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cw472yk2eb2nb"]
 
 [ext_resource type="Script" uid="uid://cfegnstouktfh" path="res://Scripts/player.gd" id="1_4flbx"]
-[ext_resource type="PackedScene" uid="uid://bxpstd28tohy2" path="res://Scenes/FloatingHealthBar.tscn" id="2_kyqiw"]
+[ext_resource type="PackedScene" uid="uid://bxpstd28tohy2" path="res://Scenes/Floating_health_bar.tscn" id="2_kyqiw"]
 [ext_resource type="Texture2D" uid="uid://dcuxl4u7pi1qr" path="res://Assets/Carly32x32_right.png" id="3_gntrk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sh265"]

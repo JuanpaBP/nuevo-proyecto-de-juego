@@ -16,15 +16,13 @@ var sprite_right = preload("res://Assets/Rober_right.png")
 var sprite_left = preload("res://Assets/Rober_left.png")
 
 # Variables for the bouncing of each other
-var push_factor = 4000.0 # Magic number to calculate push force.
-var max_push_speed = 50.0
-var push_velocity = Vector2.ZERO
+@export var push_factor = 4000.0 # Magic number to calculate push force.
+@export var max_push_speed = 50.0
+@export var push_velocity = Vector2.ZERO
 
 @onready var soft_collision_area = $Area2D
 
 func _ready():
-	print("Enemy spawned at: ", global_position)
-
 	# Find the player node using its full scene path.
 	player_node = get_node("/root/Game/Player")
 
@@ -32,7 +30,7 @@ func _ready():
 		print("ERROR: Player node 'Player' not found by enemy at path '/root/Game/Player'!")
 		print("Please ensure your main scene's root is named 'Game' and your player node is named 'Player'.")
 
-func _process(delta):
+func _physics_process(delta: float) -> void:
 	_apply_soft_collision()
 	if player_node != null and is_chasing:
 		# Calculate the direction vector from the enemy to the player
@@ -59,7 +57,6 @@ func _process(delta):
 func take_hit():
 	hp = hp - 20
 	if(hp <= 0):
-		print("Enemy is dead, removing it from scene")
 		defeated.emit()
 		_remove_from_scene() # Remove the enemy from the scene
 		

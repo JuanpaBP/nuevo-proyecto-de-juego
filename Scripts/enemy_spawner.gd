@@ -23,16 +23,11 @@ func spawn_enemies():
 	defeated_count = 0
 	
 	for i in range(num_enemies_to_spawn):
-		#Create a new instance of the enemy, and place it in the world.
+		#Create a new instance of the enemy.
 		var enemy_instance = EnemyScene.instantiate();
-
-		#Add a random offset within the defined spawn_radius.
-		#randf_range(min, max) returns a random float between both parameters
 		
+		#Connect it to the signal, so we can track when they're defeated.
 		enemy_instance.defeated.connect(_on_enemy_defeated)
-		
-		# With this, set the enemy world position
-		#It has to be positioned bearing in mind the spawner's global position
 		
 		#This sounds weird, but it will put the enemies, as children of 
 		#the game scene, instead of the spawner.
@@ -53,3 +48,12 @@ func _on_enemy_defeated():
 		
 func clean_enemies_from_scene():
 	get_tree().call_group("enemies","_remove_from_scene")
+
+
+func position_enemies(body: CharacterBody2D, enemy_available_positions: Array):
+	print("Positioning enemies in the grid...")
+	var amount_of_empty_spaces = enemy_available_positions.size()
+	print("Amount of empty spaces: ", amount_of_empty_spaces)
+	var random_position_selected = int(randf_range(0, amount_of_empty_spaces))
+	print("Position selected for the first enemy...", random_position_selected)
+	body.position = enemy_available_positions[random_position_selected]

@@ -1,14 +1,14 @@
 extends CharacterBody2D
 
 var speed = 200 # Pixels per second
-var current_direction = Vector2(1, 0) # Initial direction: Vector2(x, y) (1,0) means right
-var last_direction = current_direction # used for shooting. #If current_direction is (0, 0) bullet doesnt fly 
+var current_direction = Vector2.RIGHT
+var last_direction = current_direction
 
 #Projectile variables
 var ProjectileScene = preload("res://Scenes/Projectile.tscn")
-var can_shoot = true # A flag to control if the player can shoot right now
-var shoot_cooldown_time = 0.3 # Time (in seconds) between shots
-var shoot_timer = 0.0 # Internal timer to track cooldown progress
+var can_shoot = true 
+var shoot_cooldown_time = 0.3
+var shoot_timer = 0.0 
 
 #Player Health and Damage Variables
 var max_health = 100.0
