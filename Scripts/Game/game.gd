@@ -1,6 +1,6 @@
 extends Node2D
 
-var EnemyScene = preload("res://Scenes/Enemy.tscn")
+var EnemyScene = preload("res://Scenes/Enemies/RoberEnemy.tscn")
 
 # This is a reference to the player node in the scene
 @onready var player_node = $Player

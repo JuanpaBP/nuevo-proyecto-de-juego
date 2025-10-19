@@ -29,7 +29,6 @@ func get_room_available_position():
 	return room_available_positions
 
 func _ready():
-	# Loop through the grid and create a label for each cell
 	room_matrix.resize(num_cells_x)
 	for x in range(num_cells_x):
 		room_matrix[x] = []
@@ -42,10 +41,6 @@ func generate_room_layout():
 			var is_outer_wall = is_outer_wall(x, y)
 			var is_gate_space = false
 			
-			#Check for gate positions
-			#is_gate_space = get_gate_position(x, y)
-			
-			#Populate
 			if is_outer_wall and not is_gate_space:
 				room_matrix[x][y] = CellType.WALL
 			elif is_gate_space:
@@ -61,37 +56,24 @@ func generate_room_layout():
 func instantiate_room():
 	for y in range(num_cells_y):
 		for x in range(num_cells_x):
-			var position = Vector2(x*cell_size, y*cell_size)
+			var cell_position = Vector2(x*cell_size, y*cell_size)
 			var cell_type = room_matrix[x][y]
 			
-			#Instantiate the background tile for every cell first
 			var background_instance = bgTile.instantiate();
 			add_child(background_instance)
-			background_instance.position = position
+			background_instance.position = cell_position
 			
 			if cell_type == CellType.WALL:
 				var wall_instance = wall.instantiate()
 				add_child(wall_instance)
-				wall_instance.position = position
+				wall_instance.position = cell_position
 			elif cell_type == CellType.ROCK:
 				var rock_instance = rock.instantiate()
 				add_child(rock_instance)
-				rock_instance.position = position
+				rock_instance.position = cell_position
 			elif cell_type == CellType.EMPTY:
-				room_available_positions.push_back(position)
+				room_available_positions.push_back(cell_position)
 
 
 func is_outer_wall(x: int, y: int):
 	return x == 0 or x == num_cells_x - 1 or y == 0 or y == num_cells_y - 1
-
-#func get_gate_position(x: int, y: int):
-	#var gate_y_center = int(num_cells_y / 2)
-	#var gate_x_center = int(num_cells_x / 2)
-	#if x == 0 and abs(y - gate_y_center) < gate_size / 2: #Left wall
-		#return true
-	#elif x == num_cells_x - 1 and abs(y - gate_y_center) < gate_size / 2: #Right wall
-		#return true
-	#elif y == 0 and abs(x - gate_x_center) < gate_size / 2: #Top Wall
-		#return true
-	#elif y == num_cells_y - 1 and abs(x - gate_x_center) < gate_size / 2: #Bottom Wall
-		#return true

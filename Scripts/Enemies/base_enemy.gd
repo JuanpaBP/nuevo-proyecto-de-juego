@@ -19,6 +19,16 @@ var is_chasing = true
 @onready var sprite = $Sprite
 @onready var soft_collision_area = $Area2D
 
+@onready var look_ahead: RayCast2D = $Ray_LookAhead
+@onready var flank_right: RayCast2D = $Ray_FlankRight
+@onready var flank_left: RayCast2D = $Ray_FlankLeft
+
+var current_avoidance_direction = Vector2.ZERO
+
+var avoidance_timer = 0.0
+@export var avoidance_duration = 0.5
+
+
 var sprite_right
 var sprite_left
 
@@ -29,20 +39,7 @@ func _ready():
 		print("Please ensure your main scene's root is named 'Game' and your player node is named 'Player'.")
 
 func _physics_process(delta: float) -> void:
-	_apply_soft_collision()
-	if player_node != null:
-		var direction_to_player = (player_node.global_position - global_position).normalized()
-		var final_velocity = direction_to_player * speed + push_velocity
-		if final_velocity.length() > speed + max_push_speed:
-			final_velocity = final_velocity.normalized() * (speed + max_push_speed)
-		velocity = final_velocity
-		move_and_slide()
-		push_velocity = push_velocity.move_toward(Vector2.ZERO, delta * 1000)
-		
-		if direction_to_player.x > 0:
-			sprite.texture = sprite_right
-		elif direction_to_player.x < 0:
-			sprite.texture = sprite_left
+	_movement_logic(delta)
 
 func take_hit(damage: int):
 	hp = hp - damage
@@ -72,6 +69,61 @@ func _apply_soft_collision():
 
 func apply_push(push_vector):
 	push_velocity += push_vector
+
+func _movement_logic(delta: float):
+	_chase(delta)
+
+func _chase(delta: float):
+	_apply_soft_collision()
+	if player_node != null:
+		var direction_to_player = (player_node.global_position - global_position).normalized()
+		look_ahead.rotation = direction_to_player.angle()
+		if avoidance_timer > 0:
+			avoidance_timer -= delta
+			if(avoidance_timer <= 0):
+				current_avoidance_direction = Vector2.ZERO
+			var final_velocity = current_avoidance_direction * speed + push_velocity
+			velocity = final_velocity.limit_length(speed+max_push_speed)
+		else:
+			look_ahead.rotation = direction_to_player.angle()
+			look_ahead.force_raycast_update()
+			if(look_ahead.is_colliding()):
+				avoidance_timer = avoidance_duration
+				current_avoidance_direction = _find_clear_flank(direction_to_player)
+				var final_velocity = current_avoidance_direction * speed + push_velocity
+				velocity = final_velocity.limit_length(speed + max_push_speed)
+			else:
+				var final_velocity = direction_to_player * speed + push_velocity
+				velocity = final_velocity.limit_length(speed + max_push_speed)
+		move_and_slide()
+		push_velocity = push_velocity.move_toward(Vector2.ZERO, delta * 1000)
+		
+		handle_sprite_rotation(velocity)
+
+
+func _find_clear_flank(initial_direction: Vector2) -> Vector2:
+	var flank_right_vector = initial_direction.rotated(deg_to_rad(-90))
+	var flank_left_vector = initial_direction.rotated(deg_to_rad(90))
+	flank_right.rotation = flank_right_vector.angle()
+	flank_right.force_raycast_update()
+	
+	if not flank_right.is_colliding():
+		return flank_right_vector
+	
+	flank_right.rotation = flank_left_vector.angle()
+	flank_right.force_raycast_update()
+	
+	if not flank_right.is_colliding():
+		return flank_left_vector
+	
+	return initial_direction.rotated(deg_to_rad(45))
+
+
+func handle_sprite_rotation(direction):
+	if direction.x > 0:
+		sprite.texture = sprite_right
+	elif direction.x < 0:
+		sprite.texture = sprite_left
 
 func _remove_from_scene():
 	queue_free()
