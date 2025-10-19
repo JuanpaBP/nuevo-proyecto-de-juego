@@ -13,7 +13,7 @@ var num_cells_x = int(viewport_size.x / cell_size)
 var num_cells_y = int(viewport_size.y / cell_size)
 var room_matrix = []
 @export var gate_size = 3
-@export var rock_chance = 0.1
+@export var rock_chance = 0.2
 var empty_cells_counter = 0
 var room_available_positions = []
 

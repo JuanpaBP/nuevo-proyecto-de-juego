@@ -19,10 +19,7 @@ func _ready():
 	print("Game _ready() called.")
 	
 	# Connect the player's died signal to our game over function.
-	if player_node:
-		player_node.died.connect(_on_player_died)
-	else:
-		print("ERROR: Player node note found")
+	player_node.died.connect(_on_player_died)
 	
 	#Set up initial scene
 	message_label.hide()
@@ -57,7 +54,6 @@ func _on_victory_trigger():
 	
 
 func _on_player_died():
-	print("Player has died. Game Over.")
 	message_label.text = "Game Over!"
 	message_label.show()
 	restart_button.show()

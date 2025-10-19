@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://duvd10nl13wes"]
 
-[ext_resource type="Script" uid="uid://cauygbi485eos" path="res://Scripts/projectile.gd" id="1_lal66"]
+[ext_resource type="Script" uid="uid://cauygbi485eos" path="res://Scripts/Weapons/projectile.gd" id="1_lal66"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xh6v2"]
 size = Vector2(10, 10)
@@ -9,6 +9,7 @@ size = Vector2(10, 10)
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("1_lal66")
+projectile_dmg = 100
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_xh6v2")

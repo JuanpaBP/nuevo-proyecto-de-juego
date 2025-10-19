@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://b7e2ydfn42bp0"]
 
-[ext_resource type="Script" uid="uid://bans0m0t44twd" path="res://Scripts/enemy.gd" id="1_tt7e2"]
+[ext_resource type="Script" uid="uid://bans0m0t44twd" path="res://Scripts/Enemies/rober.gd" id="1_tt7e2"]
 [ext_resource type="Texture2D" uid="uid://bo7jix1tvex1c" path="res://Assets/Rober_right.png" id="2_wovta"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wovta"]
