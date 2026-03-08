@@ -8,15 +8,24 @@ var cell_size = 64
 var bgTile = preload("res://Scenes/Rooms/Woods_floor.tscn")
 var wall = preload("res://Scenes/Rooms/Wall.tscn")
 var rock = preload("res://Scenes/Rooms/Stone_obstacle.tscn")
+var gate = preload("res://Scenes/Rooms/Gate.tscn")
 
 var num_cells_x = int(viewport_size.x / cell_size)
 var num_cells_y = int(viewport_size.y / cell_size)
 var room_matrix = []
 @export var gate_size = 3
-@export var rock_chance = 0.2
+@export var rock_chance = 0.1
 var empty_cells_counter = 0
 var room_available_positions = []
+var room_data: Dictionary = {}
 
+enum Direction {
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST,
+	NONE
+}
 
 enum CellType{
 	EMPTY,
@@ -25,21 +34,24 @@ enum CellType{
 	GATE_SPACE
 }
 
-func get_room_available_position():
-	return room_available_positions
-
 func _ready():
 	room_matrix.resize(num_cells_x)
 	for x in range(num_cells_x):
 		room_matrix[x] = []
 		room_matrix[x].resize(num_cells_y)
 
+func set_room_data(data: Dictionary):
+	room_data = data
+
+func get_room_available_position():
+	return room_available_positions
+
 func generate_room_layout():
 	#Loop through the grid
 	for y in range(num_cells_y):
 		for x in range(num_cells_x):
-			var is_outer_wall = is_outer_wall(x, y)
-			var is_gate_space = false
+			var is_outer_wall = is_outer_wall_space(x, y)
+			var is_gate_space = is_gate_space(x, y)
 			
 			if is_outer_wall and not is_gate_space:
 				room_matrix[x][y] = CellType.WALL
@@ -71,9 +83,32 @@ func instantiate_room():
 				var rock_instance = rock.instantiate()
 				add_child(rock_instance)
 				rock_instance.position = cell_position
+			elif cell_type == CellType.GATE_SPACE:
+				print("is gate")
+				var gate_instance = gate.instantiate()
+				add_child(gate_instance)
+				gate_instance.position = cell_position
 			elif cell_type == CellType.EMPTY:
 				room_available_positions.push_back(cell_position)
 
+				
 
-func is_outer_wall(x: int, y: int):
+func is_outer_wall_space(x: int, y: int):
 	return x == 0 or x == num_cells_x - 1 or y == 0 or y == num_cells_y - 1
+
+func is_gate_space(x: int, y: int) -> bool:
+	var is_horizontal_gate = (y == 0 and room_data.get('NORTH')) or (y == num_cells_y - 1 and room_data.get('SOUTH'))
+	print("is_horizontal_gate", is_horizontal_gate)
+	var is_vertical_gate = (x == 0 and room_data.get('WEST')) or (x == num_cells_x - 1 and room_data.get('EAST'))
+	print("is_vertical_gate", is_vertical_gate)
+	
+	if is_horizontal_gate:
+		var center_start = int(num_cells_x / 2) - int(gate_size / 2)
+		var center_end = int(num_cells_x / 2) + int(gate_size / 2)
+		return x >= center_start and x <= center_end
+	
+	if is_vertical_gate:
+		var center_start = int(num_cells_y / 2) - int(gate_size / 2)
+		var center_end = int(num_cells_y / 2) + int(gate_size / 2)
+		return y >= center_start and y <= center_end
+	return false
